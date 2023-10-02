@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using Shop.data;
 using ShopCore.Domain;
 using ShopCore.Dto;
@@ -56,6 +57,51 @@ namespace Shop.ApplicationServices.Services
                         _context.FileToApis.AddAsync(path);
                     }
                 }
+            }
+        }
+
+        public async Task<List<FileToApi>> RemoveImagesFromApi(FileToApiDto[] dtos)
+        {
+            foreach (var dto in dtos)
+            {
+                var imageId = await _context.FileToApis
+                    .FirstOrDefaultAsync(x => x.ExistingFilePath == dto.ExistingFilePath);
+
+                var filePath = _webHost.ContentRootPath + "\\multipleFileUpload\\" + imageId.ExistingFilePath;
+
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
+                }
+                _context.FileToApis.Remove(imageId);
+                await _context.SaveChangesAsync();
+            }
+          
+            return null;
+        }
+
+        public async Task<FileToApi> RemoveImageFromApi(FileToApiDto dtos)
+        {
+            var imageId = await _context.FileToApis
+                .FirstOrDefaultAsync(x => x.Id == dto.Id);
+
+            var filePath = _webHost.ContentRootPath + "\\multipleFileUload\\"
+                +imageId.ExistingFilePath;
+
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+            _context.FileToApis.Remove(imageId);
+            await _context.SaveChangesAsync();
+            return null;
+        }
+
+        public void UploadFilesToDatabase(SpaceshipDto, Spaceship domain)
+        {
+            if (dto.File != null dto.Files.Count > 0)
+            {
+                foreach (var file in SpaceshipDto )
             }
         }
     }

@@ -17,6 +17,8 @@
         public string Company { get; set; }
 
         public int CargoWeight { get; set; }
+        public List<FileToApiViewModel> FileToApiViewModels { get; set; }
+            = new List<FileToApiViewModel>();
 
         //only in database
         public DateTime CreatedAt { get; set; }
