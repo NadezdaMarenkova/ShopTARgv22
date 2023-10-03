@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace ShopCore.Domain
 {
-    public class FilesToDatabase
+    public class FileToDatabase
     {
         public Guid Id { get; set; }
 
         public string ImageTitle { get; set; }
-        public string ImageData { get; set; }
+        public byte [] ImageData { get; set; }
         public Guid? RealEstateID { get; set; }
     }
 }

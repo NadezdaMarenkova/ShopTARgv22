@@ -69,7 +69,7 @@ namespace Shop.Controllers
                 Image = vm.FileToApiViewModels
                     .Select(x => new FileToApiDto
                     {
-                        Id = x.Id,
+                        Id = x.ImageId,
                         ExistingFilePath = x.FilePath,
                         SpaceshipId = x.SpaceshipId,
                     }).ToArray()
@@ -100,7 +100,7 @@ namespace Shop.Controllers
                 .Select(y => new FileToApiViewModel
                 {
                     FilePath = y.ExistingFilePath,
-                    Id = y.Id
+                    ImageId = y.Id
                 }).ToArrayAsync();
 
             var vm = new SpaceshipDetailsViewModel();
@@ -135,7 +135,7 @@ namespace Shop.Controllers
                .Select(y => new FileToApiViewModel
                {
                    FilePath = y.ExistingFilePath,
-                   Id = y.Id
+                   ImageId = y.Id
                }).ToArrayAsync();
 
             var vm = new SpaceshipsCreateUpdateViewModel();
@@ -173,12 +173,12 @@ namespace Shop.Controllers
                 ModifiedAt = vm.ModifiedAt,
                 Files = vm.Files,
                 Image = vm.FileToApiViewModels
-                    .Select(x => new FileToApiDto)
+                    .Select(x => new FileToApiDto
                     {
-                    Id = x.ImageId,
-                    ExistingFilePath = x.FilePath,
-                    SpaceshipId = x.SpaceshipId
-                }).To Array
+                        Id = x.ImageId,
+                        ExistingFilePath = x.FilePath,
+                        SpaceshipId = x.SpaceshipId
+                    }).ToArray()
 
             };
 
@@ -206,7 +206,7 @@ namespace Shop.Controllers
                .Select(y => new FileToApiViewModel
                {
                    FilePath = y.ExistingFilePath,
-                   Id = y.Id
+                   ImageId = y.Id
                }).ToArrayAsync();
 
             var vm = new SpaceshipDeleteViewModel();
@@ -244,11 +244,12 @@ namespace Shop.Controllers
         {
             var dto = new FileToApiDto()
             {
-                Id = vm.Id,
+                Id = vm.ImageId,
             };
-            var image = await _fileServices.RemoveImagesFromApi(dto);
 
-            if (image == null) 
+            var image = await _fileServices.RemoveImageFromApi(dto);
+
+            if (image == null)
             {
                 return RedirectToAction(nameof(Index));
             }

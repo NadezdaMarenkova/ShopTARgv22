@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,8 @@ namespace ShopCore.Dto
         public int Floor { get; set; }
         public string BuildingType { get; set; }
         public DateTime BuiltInYear { get; set; }
+        public List <IFormFile> Files { get; set; }
+        public IEnumerable<FileToDataBaseDto> Image { get; set; } = new List<FileToDataBaseDto>();
 
         //database
         public DateTime CreatedAt { get; set; }

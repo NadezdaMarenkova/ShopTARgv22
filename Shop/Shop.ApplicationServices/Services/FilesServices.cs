@@ -76,17 +76,17 @@ namespace Shop.ApplicationServices.Services
                 _context.FileToApis.Remove(imageId);
                 await _context.SaveChangesAsync();
             }
-          
+
             return null;
         }
 
-        public async Task<FileToApi> RemoveImageFromApi(FileToApiDto dtos)
+        public async Task<FileToApi> RemoveImageFromApi(FileToApiDto dto)
         {
             var imageId = await _context.FileToApis
                 .FirstOrDefaultAsync(x => x.Id == dto.Id);
 
             var filePath = _webHost.ContentRootPath + "\\multipleFileUload\\"
-                +imageId.ExistingFilePath;
+                + imageId.ExistingFilePath;
 
             if (File.Exists(filePath))
             {
@@ -97,11 +97,28 @@ namespace Shop.ApplicationServices.Services
             return null;
         }
 
-        public void UploadFilesToDatabase(SpaceshipDto, Spaceship domain)
+
+        public void UploadFilesToDatabase(RealEstateDto dto, RealEstate domain)
         {
-            if (dto.File != null dto.Files.Count > 0)
+            if (dto.Files != null && dto.Files.Count > 0)
             {
-                foreach (var file in SpaceshipDto )
+                foreach (var file in dto.Files)
+                {
+                    using (var target = new MemoryStream())
+                    {
+                        FileToDatabase files = new FileToDatabase()
+                        {
+                            Id = Guid.NewGuid(),
+                            ImageTitle = file.Name,
+                            RealEstateID = domain.Id,
+                        };
+
+                        file.CopyTo(target);
+                        files.ImageData = target.ToArray();
+
+                        _context.FileToDatabases.Add(files);
+                    }
+                }
             }
         }
     }

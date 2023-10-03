@@ -6,7 +6,7 @@ using ShopCore.ServiceInterface;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using System.Xml.Linq;
 using Microsoft.EntityFrameworkCore;
-
+using Shop.Models.Realestate;
 
 namespace Shop.Controllers
 {
@@ -60,7 +60,11 @@ namespace Shop.Controllers
                 RoomCount = vm.RoomCount,
                 Floor = vm.Floor,
                 BuildingType = vm.BuildingType,
-                BuiltInYear = vm.BuiltInYear
+                BuiltInYear = vm.BuiltInYear,
+                Image = vm.Image.Select(x => new FileToDatabaseDto
+                {
+                    Id = x.Id,
+                }
 
             };
             var result = await _realestateServices.Create(dto);
@@ -83,6 +87,18 @@ namespace Shop.Controllers
                 return NotFound();
             }
 
+            var photos = await _context.FileToDatabases
+                .Where(x => x.RealEstateID == id)
+                .Select(y => new ImageToDatabaseViewModel
+                {
+                    RealEstateId = y.Id,
+                    ImageId = y.Id,
+                    ImageData = y.ImageData,
+                    ImageTitle = y.ImageTitle,
+                    Image = string.Format("data:imahe/gif;base64,{0}", Convert.ToBase64String(y.ImageData))
+                }).ToArrayAsync();
+
+
             var vm = new RealEstateDetailsViewModel();
 
             vm.Id = realestate.Id;
@@ -94,6 +110,7 @@ namespace Shop.Controllers
             vm.BuiltInYear = realestate.BuiltInYear;
             vm.CreatedAt = realestate.CreatedAt;
             vm.UpdatedAt = realestate.UpdatedAt;
+            vm.Image.AddRange(photos);
 
             return View(vm);
         }

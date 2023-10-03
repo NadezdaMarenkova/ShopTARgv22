@@ -59,6 +59,10 @@ else
             <input asp-action="create" asp-controller="realestate" type="submit" class="btn btn-primary" value="Create" />
         }
 
+        @foreach (var images in Model.Image)
+        {
+            <partial name="_Images" model="images" / >
+        }
         <a asp-action="index" class="btn btn-primary">Index</a>
 
     </form>
