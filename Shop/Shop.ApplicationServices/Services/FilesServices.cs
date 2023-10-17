@@ -4,11 +4,7 @@ using Shop.data;
 using ShopCore.Domain;
 using ShopCore.Dto;
 using ShopCore.ServiceInterface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Shop.ApplicationServices.Services
 {
@@ -120,6 +116,19 @@ namespace Shop.ApplicationServices.Services
                     }
                 }
             }
+
+        }
+
+        public async Task<FileToDatabase> RemoveImageFromDatabase(FileToDataBaseDto dto)
+        {
+            var image = await _context.FileToDatabases
+                .Where(x => x.Id == dto.Id)
+                .FirstOrDefaultAsync();
+
+            _context.FileToDatabases.Remove(image);
+            await _context.SaveChangesAsync();
+
+            return image;
         }
     }
 }

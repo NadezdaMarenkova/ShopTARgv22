@@ -3,11 +3,7 @@ using Shop.data;
 using ShopCore.Domain;
 using ShopCore.Dto;
 using ShopCore.ServiceInterface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Shop.ApplicationServices.Services
 {
@@ -84,9 +80,8 @@ namespace Shop.ApplicationServices.Services
                     ExistingFilePath = y.ExistingFilePath
 
                 }).ToArrayAsync();
+
             await _fileServices.RemoveImagesFromApi(images);
-
-
             _context.Spaceships.Remove( spaceshipId );
             await _context.SaveChangesAsync();
 
@@ -100,7 +95,6 @@ namespace Shop.ApplicationServices.Services
                 .FirstOrDefaultAsync(x => x.Id == id);
             return result;
         }
-
 
     }
 }

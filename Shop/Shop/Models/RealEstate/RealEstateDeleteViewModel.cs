@@ -1,4 +1,6 @@
-﻿namespace Shop.Models.RealEstate
+﻿using Shop.Models.Realestate;
+
+namespace Shop.Models.RealEstate
 {
     public class RealEstateDeleteViewModel
     {
@@ -13,5 +15,7 @@
         public DateTime BuiltInYear { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+
+        public List<ImageToDatabaseViewModel> ImageToDatabase { get; set; } = new List<ImageToDatabaseViewModel>();
     }
 }
