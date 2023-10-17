@@ -3,13 +3,7 @@ using Shop.data;
 using ShopCore.Domain;
 using ShopCore.Dto;
 using ShopCore.ServiceInterface;
-using Shop.Data.Migrations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
+
 
 namespace Shop.ApplicationServices.Services
 {
